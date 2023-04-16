@@ -5,7 +5,7 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/cypress-set-device-pixel-ratio.git"
+    "url": "https://github.com/Popmenu/cypress-set-device-pixel-ratio.git"
   },
   "keywords": [
     "cypress",
