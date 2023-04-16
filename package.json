@@ -1,6 +1,6 @@
 {
   "name": "cypress-set-device-pixel-ratio",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A Cypress custom command to set window.devicePixelRatio",
   "main": "index.js",
   "repository": {
