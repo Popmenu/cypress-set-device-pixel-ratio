@@ -18,6 +18,12 @@ import 'cypress-set-device-pixel-ratio';
 describe('Test suite', () => {
   it('Test case', () => {
     cy.setDevicePixelRatio(2);
+    // Or
+    cy.setDevicePixelRatio(2, {
+      mobile: true;
+      width: 375;
+      height: 667;
+    });
     // your test steps
   });
 });
