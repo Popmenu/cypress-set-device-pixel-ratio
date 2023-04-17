@@ -2,7 +2,10 @@
   "name": "cypress-set-device-pixel-ratio",
   "version": "1.0.3",
   "description": "A Cypress custom command to set window.devicePixelRatio",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/Popmenu/cypress-set-device-pixel-ratio.git"
@@ -15,5 +18,9 @@
   "license": "MIT",
   "peerDependencies": {
     "cypress": ">=12.0.0"
+  },
+  "devDependencies": {
+    "@types/cypress": "^9.0.0",
+    "typescript": "^4.5.0"
   }
 }
