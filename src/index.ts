@@ -1,3 +1,4 @@
+import 'cypress-wait-until';
 
 interface Options {
   mobile: boolean;
@@ -5,11 +6,13 @@ interface Options {
   height: number;
 };
 
-declare namespace Cypress {
-  interface Chainable {
-    setDevicePixelRatio(pixelRatio: number, options?: Options): void;
+declare global {
+  namespace Cypress {
+    interface Chainable {
+      setDevicePixelRatio(pixelRatio: number, options?: Options): void;
+    }
   }
-}
+} 
 
 Cypress.Commands.add('setDevicePixelRatio', (pixelRatio: number, options: Options = {
   mobile: false,
@@ -25,5 +28,9 @@ Cypress.Commands.add('setDevicePixelRatio', (pixelRatio: number, options: Option
     },
   }));
 
-  return overrideDeviceScaleFactor(1).then(() => overrideDeviceScaleFactor(pixelRatio / window.devicePixelRatio));
+  return overrideDeviceScaleFactor(1)
+    .then(() => overrideDeviceScaleFactor(pixelRatio / window.devicePixelRatio))
+    .then(() => cy.waitUntil(()=> {
+      return cy.wrap(window.devicePixelRatio).should('eq', pixelRatio);
+    }, { interval: 10 }));
 });
