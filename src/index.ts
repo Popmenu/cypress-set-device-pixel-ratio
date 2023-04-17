@@ -12,7 +12,7 @@ declare global {
       setDevicePixelRatio(pixelRatio: number, options?: Options): void;
     }
   }
-} 
+}
 
 Cypress.Commands.add('setDevicePixelRatio', (pixelRatio: number, options: Options = {
   mobile: false,
@@ -28,9 +28,12 @@ Cypress.Commands.add('setDevicePixelRatio', (pixelRatio: number, options: Option
     },
   }));
 
-  return overrideDeviceScaleFactor(1)
-    .then(() => overrideDeviceScaleFactor(pixelRatio / window.devicePixelRatio))
-    .then(() => cy.waitUntil(()=> {
-      return cy.wrap(window.devicePixelRatio).should('eq', pixelRatio);
-    }, { interval: 10 }));
+  const initialPixelRatio = window.devicePixelRatio;
+  // Set to an unlikely value to ensure that the override is working
+  const calibrationPixelRatio = 0.1;
+
+  return overrideDeviceScaleFactor(calibrationPixelRatio)
+    .then(() => cy.waitUntil(() => cy.wrap(window.devicePixelRatio.toFixed(3)).should('not.eq', initialPixelRatio.toFixed(3))))
+    .then(() => overrideDeviceScaleFactor(pixelRatio / window.devicePixelRatio * calibrationPixelRatio))
+    .then(() => cy.waitUntil(()=> cy.wrap(window.devicePixelRatio.toFixed(3)).should('eq', pixelRatio.toFixed(3)), { interval: 10 }));
 });
